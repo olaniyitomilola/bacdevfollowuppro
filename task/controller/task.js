@@ -1,3 +1,6 @@
+const task = require
+
+
 const getTasks = (req,res)=>{
     res.status(200).json({
         success : true,
@@ -13,9 +16,9 @@ const getSingleTask = (req,res)=>{
     })
 }
 const createTask = (req,res)=>{
-    const {task} = req.body;
+    const {name} = req.body;
 
-    if(!task){
+    if(!name){
        return res.status(401).json({
             success: false,
             msg: 'Kindly provide task details'
@@ -23,7 +26,7 @@ const createTask = (req,res)=>{
     }
     res.status(200).json({
         success: true,
-        data: task
+        data: name
     })
 }
 const deleteTask = (req,res)=>{
