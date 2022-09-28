@@ -1,10 +1,10 @@
-const task = require('../model/task')
+const Task = require('../model/task')
 
 
 const getTasks = async (req,res)=>{
 
     try {
-        const tasks = await task.find({})
+        const tasks = await Task.find({})
         res.status(200).json({
             success : true,
             data: tasks
@@ -29,9 +29,9 @@ const getSingleTask = async (req,res)=>{
 
     try {
         const {id: taskID} = req.params;
-        const singleTask = await task.findOne({_id: taskID})
-    
-        if(taskID == null){
+        const singleTask = await Task.findOne({_id: taskID})
+ 
+        if(singleTask == null){
             return res.status(401).json({
                 success: false,
                 msg: `No task with id: ${taskID}`
@@ -45,10 +45,12 @@ const getSingleTask = async (req,res)=>{
     } catch (error) {
         res.status(500).json({
             success: false,
-            msg: error
+            msg: [error.name, error.message]
             
         })
     }
+    //handle the error in both if == nul and catch. The if id pattern is right but the item does ot exist
+    //the catch is thrown when the paatern doesnt match.
    
 
 }
@@ -62,7 +64,7 @@ const createTask = async (req,res)=>{
         })
     }
     try {
-        const newTask = await task.create({name}) //put in trycatch to handle rejection error from
+        const newTask = await Task.create({name}) //put in trycatch to handle rejection error from
     //validation
     //personal preference, I will like to do my validation on the frontend first and use backend as back up
     //on the backend, i'll use the up layer that doesnt get to the database part at all too
@@ -75,17 +77,39 @@ const createTask = async (req,res)=>{
     }
     
 }
-const deleteTask = (req,res)=>{
-    const{id} = req.params;
+const deleteTask = async (req,res)=>{
+    const{id : taskId} = req.params;
 
-    res.status(200).json({
-        success: true,
-        data: ['deleting task']
-    })
+    try {
+        const task = await Task.findOneAndDelete({_id: taskId});
+        if(task == null){
+            return res.status(404).json({
+                success: false,
+                msg: `no task with task id: ${taskId}`
+            })
+        }
+        res.status(200).json({
+            success: true,
+            data: task
+        })
+        
+    }catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: [error.name, error.message]
+            
+        })
+    }
+    //handle the error in both if == nul and catch. The if id pattern is right but the item does ot exist
+    //the catch is thrown when the paatern doesnt match.
+
+   
 }
-const editask = (req,res)=>{
+const editask = async (req,res)=>{
     const {id} = req.params;
-    const{task} = req.body
+    const{name} = req.body
+
+    const task = await Task.findOneAndUpdate({_id: id})
 
     res.status(200).json({
         success: true,
