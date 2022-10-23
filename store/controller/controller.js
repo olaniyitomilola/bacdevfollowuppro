@@ -26,7 +26,7 @@ const getOneItem = async(req,res)=>{
 }
 const queriedGet = async(req,res)=>{
     try {
-        const {featured, name, _id, rating, company} = req.query;
+        const {featured, name, _id, rating, company, sort,fields} = req.query;
         const queryObject = {};
 
         if(featured){
@@ -35,11 +35,35 @@ const queriedGet = async(req,res)=>{
         if(company){
             queryObject.company = company;
         }
+        if(name){
+            //search mongo regex pattermn for .includes
+            queryObject.name = {$regex : name, $options:'i'}
+        }
 
 
-        const product = await Store.find(queryObject)
+        let product =  Store.find(queryObject)
+
+        if(sort){
+
+            //when there are two sort parameters, thwy are seperated by space, since user will be providing the parameter with 
+            //comma, we need to split into array by the comma and join tegether with space
+            const sorting = sort.split (',').join (" ");
+            product = product.sort(sorting);
+            console.log(sorting)
+        }
+
+        //print out just field listed
+        if(fields){
+            const sorting = fields.split (',').join (" ");
+            product = product.select(sorting);
+            console.log(sorting)
+        }
+
+
+
+        const products = await product
         res.status(200).json({
-            product
+            products
         })
         
     } catch (error) {
