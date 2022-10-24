@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+body header {
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+body main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+body main .formatPanel {
+  width: clamp(10rem, 20%, 150rem);
+  background-color: black;
+  height: 100%;
+  overflow: hidden;
+}
+body main .displayPanel {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+body main .displayPanel .item {
+  width: 100%;
+  height: 15rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0.8rem;
+}
+body main .displayPanel .item #itemPicture {
+  width: clamp(15rem, 40%, 25rem);
+  padding: 1rem;
+  background-color: aliceblue;
+  border-radius: 1rem;
+}
+body main .displayPanel .item #itemDescription {
+  width: clamp(30rem, 60%, 70rem);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body main .displayPanel .item #itemDescription #itemCompany {
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+body main .displayPanel .item #itemDescription #itemName {
+  font-size: 1.5rem;
+}
+body main .displayPanel .item #itemDescription #itemPrice {
+  font-size: 1rem;
+}
+body main .displayPanel .item #itemDescription #itemRating {
+  font-size: 0.7rem;
+  color: greenyellow;
+}
+
+/*# sourceMappingURL=style.css.map */
