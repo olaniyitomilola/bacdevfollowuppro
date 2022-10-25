@@ -28,6 +28,7 @@ body{
             overflow: hidden;
         }
         .displayPanel{
+            position: relative;
             width: 100%;
             height: 100%;
             padding: 1rem;
@@ -58,10 +59,18 @@ body{
                     #itemCompany{
                         font-weight: 800;
                         font-size: 0.8rem;
+                        ::first-letter{
+                            text-transform: capitalize;
+                        }
                     }
                     #itemName{
                         font-size: 1.5rem;
+                       
                     }
+                    #itemName::first-letter, #itemCompany::first-letter{
+                        text-transform: capitalize;
+                    }
+
                     #itemPrice{
                         font-size: 1rem;
                     }
@@ -73,4 +82,67 @@ body{
             }
         }
     }
+}
+.preloader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% -50%);
+    transform: scale(1.5);
+    .loader{
+        height: 1rem;
+        width: 1px;
+        position: absolute;
+         animation: rotate 3.5s linear infinite;
+        #dot{
+            top: 50px;
+            height: 7px;
+            width: 7px;
+            background-color: black;
+            position: relative;
+            border-radius: 50%;
+
+        }
+    }
+}
+.loader:nth-child(1){
+    animation-delay: 0.15s;
+}
+.loader:nth-child(2){
+    animation-delay: 0.3s;
+}
+.loader:nth-child(3){
+    animation-delay: 0.45s;
+}
+.loader:nth-child(4){
+    animation-delay: 0.6s;
+}
+.loader:nth-child(5){
+    animation-delay: 0.75s;
+}
+.loader:nth-child(6){
+    animation-delay: 0.9s;
+}
+
+
+@keyframes rotate {
+    30%{
+        transform: rotate(220deg);
+    }
+    40%{
+        transform: rotate(450deg);
+        opacity: 1;
+    }
+    75%{
+        transform: rotate(720deg);
+        opacity: 1;
+    }
+    76%{
+        opacity: 0;
+    }
+    100%{
+        transform: rotate(0deg);
+        opacity: 0;
+    }
+    
 }

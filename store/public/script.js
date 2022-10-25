@@ -1,5 +1,6 @@
 
 const displayPanel  = document.querySelector('.displayPanel');
+const preloader = document.querySelector('.preloader');
 
 async function getProducts(){
 
@@ -17,7 +18,7 @@ async function getProducts(){
             const itemDescription = document.createElement('div');
             itemDescription.id = 'itemDescription'
             const itemPicture = document.createElement('div');
-            itemDescription.id = 'itemPicture'
+            itemPicture.id = 'itemPicture'
             const itemName = document.createElement('div')
             const itemRating = document.createElement('div')
             const itemPrice = document.createElement('div')
@@ -36,6 +37,11 @@ async function getProducts(){
 
             item.append(itemPicture,itemDescription)
             displayPanel.appendChild(item)
+        })
+        window.addEventListener('load',()=>{
+                preloader.style.display = 'none';
+                displayPanel.style.display = 'flex';
+
         })
 
     }catch(err){
