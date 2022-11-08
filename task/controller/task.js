@@ -94,11 +94,7 @@ const deleteTask = async (req,res)=>{
         })
         
     }catch (error) {
-        res.status(500).json({
-            success: false,
-            msg: [error.name, error.message]
-            
-        })
+        
     }
     //handle the error in both if == nul and catch. The if id pattern is right but the item does ot exist
     //the catch is thrown when the paatern doesnt match.
@@ -107,15 +103,36 @@ const deleteTask = async (req,res)=>{
 }
 const editask = async (req,res)=>{
     const {id} = req.params;
-    const{name} = req.body
+    //the update metghod takes a third arguement, the option object, here you set the result
+    //returned after update. The default is the before documentm, change it to the new with
+    // the new key and to enforce the schema on the update, you need to set the runValidators.
+    
+    try {
+        const task = await Task.findOneAndUpdate({_id: id},req.body,{
+            new : true,
+            runValidators: true 
+        })
+        if(task == null){
+            return res.status(407).json({
+                success: false,
+                msg: `no task with task id: ${id}`
+            })
+        }
 
-    const task = await Task.findOneAndUpdate({_id: id})
-
-    res.status(200).json({
-        success: true,
-        data: ['editing task']
-
-    })
+        res.status(200).json({
+            success: true,
+            data: task
+    
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: [error.name, error.message]
+            
+        })
+    }
+    
+ 
 }
 
 module.exports = {

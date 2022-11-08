@@ -5,10 +5,7 @@ require('dotenv').config()
 const app = express();
 const taskrouter = require('./route/task'); 
 
-
-
-const port = 4000;
-
+const port = process.env.PORT || 4000;
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json())
